@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Te quiero mucho 💚</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            overflow: hidden;
+            background: #55d6c2;
+        }
+
+        /* =========================
+           PANTALLAS
+        ========================= */
+
+        .pantalla {
+            width: 100vw;
+            height: 100vh;
+            min-height: 100vh;
+
+            display: none;
+
+            position: relative;
+
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+
+            overflow: hidden;
+        }
+
+        .pantalla.activa {
+            display: flex;
+        }
+
+
+        /* =========================
+           PRIMERA PANTALLA
+        ========================= */
+
+        #inicio {
+            background: #55d6c2;
+            padding: 25px;
+        }
+
+        .contenedor-inicio {
+
+            width: min(90%, 500px);
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            gap: 20px;
+
+            animation: aparecer 1.2s ease forwards;
+        }
+
+
+        /* FOTO DE LA PLAYA */
+
+        .foto-playa {
+
+            width: 100%;
+            max-height: 65vh;
+
+            object-fit: contain;
+
+            border-radius: 22px;
+
+            box-shadow:
+                0 12px 0 rgba(0, 90, 80, 0.35),
+                0 18px 30px rgba(0, 0, 0, 0.30);
+
+            animation: aparecerFoto 1.5s ease forwards;
+        }
+
+
+        /* =========================
+           BOTÓN ENTRAR
+        ========================= */
+
+        .texto-entrada {
+
+            background: white;
+
+            color: #176f64;
+
+            width: 100%;
+
+            padding: 18px 20px;
+
+            border-radius: 20px;
+
+            text-align: center;
+
+            box-shadow:
+                0 8px 0 #168f80,
+                0 14px 25px rgba(0, 0, 0, 0.25);
+
+            cursor: pointer;
+
+            transition: 0.2s;
+
+            user-select: none;
+        }
+
+        .texto-entrada:hover {
+            transform: translateY(-3px);
+        }
+
+        .texto-entrada:active {
+
+            transform: translateY(5px);
+
+            box-shadow:
+                0 3px 0 #168f80,
+                0 7px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .texto-pequeno {
+
+            display: block;
+
+            font-size: 17px;
+
+            margin-bottom: 5px;
+        }
+
+        .entrar {
+
+            display: block;
+
+            font-size: 27px;
+
+            font-weight: bold;
+        }
+
+
+        /* =========================
+           SEGUNDA PANTALLA
+        ========================= */
+
+        #mensaje {
+
+            background-image:
+                linear-gradient(
+                    rgba(0, 0, 0, 0.25),
+                    rgba(0, 0, 0, 0.25)
+                ),
+                url("bata.jpeg");
+
+            background-size: cover;
+
+            background-position: center;
+
+            background-repeat: no-repeat;
+
+            justify-content: center;
+            align-items: center;
+        }
+
+
+        /* =========================
+           BOTÓN REGRESAR
+        ========================= */
+
+        .regresar {
+
+            position: absolute;
+
+            top: 20px;
+            left: 20px;
+
+            z-index: 20;
+
+            background: white;
+
+            color: #176f64;
+
+            border: none;
+
+            border-radius: 16px;
+
+            padding: 13px 20px;
+
+            font-size: 17px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 7px 0 #168f80,
+                0 12px 20px rgba(0, 0, 0, 0.3);
+
+            transition: 0.2s;
+        }
+
+        .regresar:hover {
+            transform: translateY(-3px);
+        }
+
+        .regresar:active {
+
+            transform: translateY(5px);
+
+            box-shadow:
+                0 2px 0 #168f80,
+                0 5px 10px rgba(0, 0, 0, 0.2);
+        }
+
+
+        /* =========================
+           MENSAJE PRINCIPAL
+        ========================= */
+
+        .mensaje-principal {
+
+            color: white;
+
+            text-align: center;
+
+            font-size: clamp(38px, 8vw, 75px);
+
+            font-weight: 900;
+
+            padding: 20px 30px;
+
+            text-shadow:
+                3px 3px 0 rgba(0, 0, 0, 0.3),
+                0 5px 15px rgba(0, 0, 0, 0.4);
+
+            opacity: 0;
+        }
+
+        .mensaje-principal.aparecer {
+
+            animation:
+                mensajeAparecer 3s ease forwards;
+        }
+
+
+        /* =========================
+           LONA BLANCA
+        ========================= */
+
+        .lona {
+
+            position: absolute;
+
+            bottom: 10%;
+
+            width: 100%;
+
+            background: white;
+
+            padding: 18px 0;
+
+            overflow: hidden;
+
+            box-shadow:
+                0 -5px 15px rgba(0, 0, 0, 0.15),
+                0 5px 15px rgba(0, 0, 0, 0.2);
+
+            opacity: 0;
+        }
+
+        .lona.mostrar {
+
+            animation:
+                aparecerLona 1s ease forwards;
+        }
+
+
+        /* =========================
+           TEXTO DE LA LONA
+        ========================= */
+
+        .texto-lona {
+
+            white-space: nowrap;
+
+            display: inline-block;
+
+            font-size: clamp(20px, 5vw, 34px);
+
+            font-weight: bold;
+
+            color: #176f64;
+
+            padding-left: 100%;
+
+            animation:
+                moverTexto 16s linear infinite;
+        }
+
+
+        /* =========================
+           ANIMACIONES
+        ========================= */
+
+        @keyframes aparecer {
+
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+
+        @keyframes aparecerFoto {
+
+            from {
+                opacity: 0;
+                transform: scale(0.85);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+
+        @keyframes mensajeAparecer {
+
+            0% {
+                opacity: 0;
+
+                transform:
+                    scale(0.5)
+                    translateY(30px);
+            }
+
+            60% {
+
+                opacity: 1;
+
+                transform:
+                    scale(1.08)
+                    translateY(0);
+            }
+
+            100% {
+
+                opacity: 1;
+
+                transform:
+                    scale(1);
+            }
+        }
+
+
+        @keyframes aparecerLona {
+
+            from {
+
+                opacity: 0;
+
+                transform:
+                    translateY(30px);
+            }
+
+            to {
+
+                opacity: 1;
+
+                transform:
+                    translateY(0);
+            }
+        }
+
+
+        /* TEXTO DERECHA → IZQUIERDA */
+
+        @keyframes moverTexto {
+
+            from {
+                transform: translateX(0);
+            }
+
+            to {
+                transform: translateX(-100%);
+            }
+        }
+
+
+        /* =========================
+           CORAZONES
+        ========================= */
+
+        @keyframes corazonSubir {
+
+            0% {
+
+                opacity: 1;
+
+                transform:
+                    translate(-50%, -50%)
+                    scale(0.5)
+                    rotate(0deg);
+            }
+
+            30% {
+
+                opacity: 1;
+
+                transform:
+                    translate(
+                        calc(-50% + 10px),
+                        calc(-50% - 30px)
+                    )
+                    scale(1.2)
+                    rotate(-10deg);
+            }
+
+            100% {
+
+                opacity: 0;
+
+                transform:
+                    translate(
+                        calc(-50% + 30px),
+                        calc(-50% - 150px)
+                    )
+                    scale(1)
+                    rotate(20deg);
+            }
+        }
+
+
+        /* =========================
+           ADAPTACIÓN PARA CELULAR
+        ========================= */
+
+        @media (max-width: 600px) {
+
+            #inicio {
+                padding: 15px;
+            }
+
+            .contenedor-inicio {
+                width: 94%;
+            }
+
+            .foto-playa {
+
+                max-height: 62vh;
+
+                border-radius: 18px;
+            }
+
+            .texto-entrada {
+
+                padding: 15px;
+            }
+
+            .texto-pequeno {
+
+                font-size: 15px;
+            }
+
+            .entrar {
+
+                font-size: 24px;
+            }
+
+            .regresar {
+
+                top: 14px;
+                left: 14px;
+
+                padding: 11px 16px;
+
+                font-size: 15px;
+            }
+
+            .mensaje-principal {
+
+                width: 95%;
+
+                font-size:
+                    clamp(34px, 11vw, 55px);
+            }
+
+            .lona {
+
+                bottom: 8%;
+
+                padding: 15px 0;
+            }
+
+            .texto-lona {
+
+                font-size: 22px;
+
+                animation-duration: 18s;
+            }
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+
+    <!-- ==========================================
+         PRIMERA PANTALLA
+    =========================================== -->
+
+    <section id="inicio" class="pantalla activa">
+
+        <div class="contenedor-inicio">
+
+            <img
+                src="playa.jpeg"
+                alt="Foto en la playa"
+                class="foto-playa"
+            >
+
+            <div
+                class="texto-entrada"
+                onclick="entrar()"
+            >
+
+                <span class="texto-pequeno">
+                    Te quiero decir algo
+                </span>
+
+                <span class="entrar">
+                    ENTRAR 💚
+                </span>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ==========================================
+         SEGUNDA PANTALLA
+    =========================================== -->
+
+    <section id="mensaje" class="pantalla">
+
+
+        <!-- BOTÓN REGRESAR -->
+
+        <button
+            class="regresar"
+            onclick="regresar()"
+        >
+            ← REGRESAR
+        </button>
+
+
+
+        <!-- MENSAJE -->
+
+        <h1
+            id="mensajePrincipal"
+            class="mensaje-principal"
+        >
+            TE QUIERO MUCHO PAPOI 💚
+        </h1>
+
+
+
+        <!-- LONA BLANCA -->
+
+        <div
+            id="lona"
+            class="lona"
+        >
+
+            <div class="texto-lona">
+
+                También quería decirte que eres
+                el amor de mi vida ❤️
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+
+    <script>
+
+        /* =========================
+           ELEMENTOS
+        ========================= */
+
+        const inicio =
+            document.getElementById("inicio");
+
+        const mensaje =
+            document.getElementById("mensaje");
+
+        const mensajePrincipal =
+            document.getElementById("mensajePrincipal");
+
+        const lona =
+            document.getElementById("lona");
+
+
+        /* =========================
+           ENTRAR
+        ========================= */
+
+        function entrar() {
+
+            inicio.classList.remove("activa");
+
+            mensaje.classList.add("activa");
+
+            // Reiniciar animaciones
+
+            mensajePrincipal
+                .classList
+                .remove("aparecer");
+
+            lona
+                .classList
+                .remove("mostrar");
+
+            // Permitir que la animación
+            // vuelva a comenzar
+
+            void mensajePrincipal.offsetWidth;
+
+            // Mostrar mensaje
+
+            mensajePrincipal
+                .classList
+                .add("aparecer");
+        }
+
+
+        /* =========================
+           CUANDO TERMINA
+           LA ANIMACIÓN
+        ========================= */
+
+        mensajePrincipal.addEventListener(
+            "animationend",
+            function () {
+
+                lona
+                    .classList
+                    .add("mostrar");
+
+            }
+        );
+
+
+        /* =========================
+           REGRESAR
+        ========================= */
+
+        function regresar() {
+
+            mensaje
+                .classList
+                .remove("activa");
+
+            inicio
+                .classList
+                .add("activa");
+
+            mensajePrincipal
+                .classList
+                .remove("aparecer");
+
+            lona
+                .classList
+                .remove("mostrar");
+        }
+
+
+
+        /* =========================
+           CORAZONES AL TOCAR
+        ========================= */
+
+        document.addEventListener(
+            "click",
+            function(event) {
+
+                /*
+                 * Si se tocó ENTRAR
+                 * o REGRESAR, no aparece corazón.
+                 */
+
+                if (
+                    event.target.closest("button") ||
+                    event.target.closest(".texto-entrada")
+                ) {
+                    return;
+                }
+
+                crearCorazon(
+                    event.clientX,
+                    event.clientY
+                );
+            }
+        );
+
+
+
+        /* =========================
+           CORAZONES EN CELULAR
+        ========================= */
+
+        document.addEventListener(
+            "touchstart",
+            function(event) {
+
+                /*
+                 * Evitar corazones
+                 * sobre los botones.
+                 */
+
+                if (
+                    event.target.closest("button") ||
+                    event.target.closest(".texto-entrada")
+                ) {
+                    return;
+                }
+
+                const toque =
+                    event.touches[0];
+
+                crearCorazon(
+                    toque.clientX,
+                    toque.clientY
+                );
+            }
+        );
+
+
+
+        /* =========================
+           CREAR CORAZÓN
+        ========================= */
+
+        function crearCorazon(x, y) {
+
+            const corazon =
+                document.createElement("div");
+
+
+            /*
+             * Lista de emojis
+             */
+
+            const corazones = [
+
+                "❤️",
+                "💖",
+                "💕",
+                "💗",
+                "💓",
+                "💘",
+                "💝"
+
+            ];
+
+
+            /*
+             * Elegir uno al azar
+             */
+
+            corazon.innerHTML =
+                corazones[
+                    Math.floor(
+                        Math.random() *
+                        corazones.length
+                    )
+                ];
+
+
+            /*
+             * Posición donde
+             * tocaste la pantalla
+             */
+
+            corazon.style.position = "fixed";
+
+            corazon.style.left =
+                x + "px";
+
+            corazon.style.top =
+                y + "px";
+
+
+            /*
+             * Tamaño aleatorio
+             */
+
+            corazon.style.fontSize =
+                (25 + Math.random() * 25)
+                + "px";
+
+
+            /*
+             * El corazón no
+             * interfiere con botones
+             */
+
+            corazon.style.pointerEvents =
+                "none";
+
+
+            /*
+             * Aparece por encima
+             * de todo
+             */
+
+            corazon.style.zIndex =
+                "9999";
+
+
+            /*
+             * Animación
+             */
+
+            corazon.style.animation =
+                "corazonSubir 1.5s ease-out forwards";
+
+
+            /*
+             * Agregar al documento
+             */
+
+            document.body.appendChild(
+                corazon
+            );
+
+
+            /*
+             * Eliminar después
+             * de la animación
+             */
+
+            setTimeout(
+                () => {
+                    corazon.remove();
+                },
+                1500
+            );
+
+        }
+
+    </script>
+
+</body>
+</html>
